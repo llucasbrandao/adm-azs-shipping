@@ -1,0 +1,5 @@
+enum MoedaEnum {
+    USD
+    BRL
+    EUR
+}

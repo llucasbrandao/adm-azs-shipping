@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -100,6 +98,5 @@ public class FreteModel {
 	
 	@Column(name = "DATA_ESTIMADA_ENTREGA")
 	@DateTimeFormat(pattern = "dd/mm/yyyy")
-	@Temporal(TemporalType.DATE)
 	private Date dataEstimadaEntrega;
 }

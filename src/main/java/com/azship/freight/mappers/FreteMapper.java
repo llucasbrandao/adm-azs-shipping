@@ -14,7 +14,7 @@ import com.azship.freight.models.FreteModel;
 )
 public interface FreteMapper {
 	
-	FreteDTO toDTO(FreteModel model);
+	FreteDTO toDto(FreteModel model);
 	
 	FreteModel toModel(FreteDTO dto);
 	

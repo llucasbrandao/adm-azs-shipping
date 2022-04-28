@@ -1,0 +1,4 @@
+type Query {
+    buscaCliente(id: ID, cnpj: String, cpf: String, limit: Int! = 10, page: Int! = 1): ClienteDTO
+    buscaFrete(id: Int, clienteId: Int, cnpj: String, limit: Int! = 10, page: Int! = 1): [FreteDTO]
+}

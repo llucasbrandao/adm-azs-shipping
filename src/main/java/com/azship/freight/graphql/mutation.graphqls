@@ -1,0 +1,4 @@
+type Mutation {
+    cadastraCliente(cliente: ClienteInput): ClienteDTO
+    cadastraFrete(frete: FreteInput): FreteDTO
+}

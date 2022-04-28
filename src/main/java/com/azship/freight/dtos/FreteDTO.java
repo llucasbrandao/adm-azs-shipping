@@ -1,8 +1,10 @@
 package com.azship.freight.dtos;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import com.azship.freight.enums.MoedaFreteEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -43,4 +45,7 @@ public class FreteDTO {
 	private BigDecimal valorFrete;
 	
 	private MoedaFreteEnum moedaFrete;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy") 
+	private Date dataEstimadaEntrega;
 }

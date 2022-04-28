@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
+import com.azship.freight.enums.ErrorsEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -30,7 +31,7 @@ public class ExceptionModel {
 	
 	private HttpStatus httpStatus;
 	
-	private Map<String, String> errors;
+	private Map<ErrorsEnum, String> errors;
 	
 	public ExceptionModel(String msg, String url, Date timestamp, 
 			String method, String sistema) {
@@ -53,7 +54,7 @@ public class ExceptionModel {
 		this.httpStatus = httpStatus;
 	}
 	
-	public ExceptionModel(Map<String, String> errors, String url, Date timestamp, 
+	public ExceptionModel(Map<ErrorsEnum, String> errors, String url, Date timestamp, 
 			String method, String sistema) {
 		
 		this.errors = errors;

@@ -57,7 +57,12 @@
 		    <artifactId>graphql-java-tools</artifactId>
 		    <version>5.2.4</version>
 		</dependency>
-			<dependency>
+		<dependency>
+		    <groupId>com.graphql-java</groupId>
+		    <artifactId>graphiql-spring-boot-starter</artifactId>
+		    <version>5.0.2</version>
+		</dependency>
+		<dependency>
 		    <groupId>org.mapstruct</groupId>
 		    <artifactId>mapstruct</artifactId>
 		    <version>1.4.2.Final</version> 

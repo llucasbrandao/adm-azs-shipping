@@ -1,0 +1,38 @@
+type FreteDTO {
+    id: ID
+    cliente: ClienteDTO
+	nomeProduto: String
+	descricaoProduto: String
+	sku: String
+	codigoExterno: String
+	pesoKg: Float
+	cubagem: Float
+	paisOrigem: String
+	paisDestino: String
+	estadoOrigem: String
+	estadoDestino: String
+	cepDestino: String
+	enderecoDestino: String
+	valorFrete: Float
+	moedaFrete: MoedaEnum
+    dataEstimadaEntrega: String
+}
+
+input FreteInput {
+    cliente: ClienteInput!
+	nomeProduto: String!
+	descricaoProduto: String
+	sku: String
+	codigoExterno: String!
+	pesoKg: Float
+	cubagem: Float
+	paisOrigem: String!
+	paisDestino: String!
+	estadoOrigem: String!
+	estadoDestino: String!
+	cepDestino: String!
+	enderecoDestino: String!
+	valorFrete: Float!
+	moedaFrete: MoedaEnum!
+    dataEstimadaEntrega: String!
+}

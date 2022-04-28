@@ -1,0 +1,19 @@
+type ClienteDTO {
+    id: ID
+	razaoSocial: String
+	nomeFantasia: String
+	cnpj: String
+	criadoEm: String
+	cpf: String
+	nomePessoa: String
+}
+
+input ClienteInput {
+    id: ID
+    razaoSocial: String
+	nomeFantasia: String
+	cnpj: String
+	criadoEm: String
+	cpf: String
+	nomePessoa: String
+}
