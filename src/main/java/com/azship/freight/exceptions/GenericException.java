@@ -2,6 +2,7 @@ package com.azship.freight.exceptions;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
@@ -16,7 +17,7 @@ public class GenericException extends RuntimeException implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
 	
-	private List<String> errors;
+	private Map<String, String> errors;
 	
 	private String message;
 	
@@ -27,7 +28,7 @@ public class GenericException extends RuntimeException implements Serializable {
 		this.httpCode = statusCode;
 	}
 	
-	public GenericException(List<String> errors, HttpStatus statusCode) {
+	public GenericException(Map<String, String> errors, HttpStatus statusCode) {
 		this.errors = errors;
 		this.httpCode = statusCode;
 	}

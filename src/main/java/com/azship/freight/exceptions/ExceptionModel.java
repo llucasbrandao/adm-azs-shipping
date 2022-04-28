@@ -1,7 +1,7 @@
 package com.azship.freight.exceptions;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
@@ -30,7 +30,7 @@ public class ExceptionModel {
 	
 	private HttpStatus httpStatus;
 	
-	private List<String> errors;
+	private Map<String, String> errors;
 	
 	public ExceptionModel(String msg, String url, Date timestamp, 
 			String method, String sistema) {
@@ -53,7 +53,7 @@ public class ExceptionModel {
 		this.httpStatus = httpStatus;
 	}
 	
-	public ExceptionModel(List<String> errors, String url, Date timestamp, 
+	public ExceptionModel(Map<String, String> errors, String url, Date timestamp, 
 			String method, String sistema) {
 		
 		this.errors = errors;
