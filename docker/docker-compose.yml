@@ -2,26 +2,28 @@ version: '3.5'
 services:
 # API backend service
   api-server:
-    container_name: cadastroclientes
     # Configuration for building the docker image for the backend service
     #build:
-    #context: / # Use an image built from the specified dockerfile in the `polling-app-server` directory.
-    #dockerfile: /
+      #context: ../ # Use an image built from the specified dockerfile in the `polling-app-server` directory.
+      #dockerfile: ../
     # If docker-compose build fails, try specifying the image below and remove the dockerfile: /
-    image: llucasbrandao/cadastroclientes:v0.0.3
+    image: llucasbrandao/azshipfreight:v0.0.7
+    container_name: azship-freight
     ports:
       - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
     restart: always
     depends_on: 
-      - mysql # This service depends on MySQL. Start that first.
+      - mariadb # This service depends on MySQL. Start that first.
     env_file: 
       - ../env/config.env
     networks:
       - backend
 
-  mysql:
-    image: mysql:8.0.22
-    container_name: mysql
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    ports:
+      - "3306:3306"
     env_file: 
       - ../env/config.env
     volumes:
