@@ -12,6 +12,7 @@ Pode ser usada com REST ou GraphQL.
 * Flyway;
 * MariaDB;
 * Swagger/OpenAPI;
+* outras libs opensource;
 
 ## Rest ou GraphQL
 Você pode usá-la com endpoints REST ou GraphQL.
