@@ -8,8 +8,6 @@ orbs:
 
 jobs:
   build:    
-    context:
-      - DOCKER_PERSONAL
     docker:
       - image: cimg/openjdk:18.0
         auth:
@@ -101,6 +99,8 @@ workflows:
     jobs:
       - build:
           name: Build & Publish Docker Image
+          context:
+            - DOCKER_PERSONAL
       - deployment-approval:
           name: Waiting approval
           type: approval
@@ -108,6 +108,8 @@ workflows:
             - Build & Publish Docker Image
       - staging-cluster-deploy:
           name: Deploy to Staging Cluster
+          context:
+            - DOCKER_PERSONAL
           filters:
             branches:
               ignore:
@@ -117,6 +119,8 @@ workflows:
             - Waiting approval
       - production-cluster-deploy:
           name: Deploy to Production Cluster
+          context:
+            - DOCKER_PERSONAL
           filters:
             branches:
               only:
