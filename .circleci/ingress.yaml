@@ -1,0 +1,21 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: azs
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: azs.shafitycore.cyou
+      http:
+        paths:
+          - path : /
+            pathType: Prefix
+            backend:
+              service:
+                name: azs
+                port:
+                  number: 80

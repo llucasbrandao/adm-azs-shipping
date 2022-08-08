@@ -1,0 +1,121 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+orbs:
+  kubernetes: circleci/kubernetes@1.3.1
+  docker: circleci/docker@2.1.2
+
+jobs:
+  build:    
+    docker:
+      - image: cimg/openjdk:18.0
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_TOKEN
+    resource_class: medium
+
+    working_directory: ~/adm-azs-shipping
+
+    steps:
+      # git pull
+      - checkout
+      - setup_remote_docker:
+          version: "20.10.11" 
+          docker_layer_caching: true        
+      - run: 
+          name: Publish Docker Image to Docker Hub
+          command: |
+            export DOCKER_BUILDKIT=1
+            docker build -t llucasbrandao/adm-azs-shipping:${CIRCLE_BUILD_NUM} .
+            echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin
+            docker push llucasbrandao/adm-azs-shipping:${CIRCLE_BUILD_NUM}
+  staging-cluster-deploy:
+    description: Staging Cluster Deploy
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    resource_class: medium
+      
+    working_directory: ~/adm-azs-shipping
+    
+    steps:
+      - checkout
+      - run: 
+          name: Setting Build Version
+          command: echo "export BUILD_NUM=$(expr ${CIRCLE_BUILD_NUM} - 1)" >> $BASH_ENV
+          
+      - kubernetes/install-kubectl:
+        kubectl-version: latest 
+
+      - kubernetes/install-kubeconfig:
+        kubeconfig: KUBECONFIG_DATA
+        
+      - kubernetes/create-or-update-resource:
+          resource-name: deployment/adm-azs-shipping 
+          show-kubectl-command: true 
+          get-rollout-status: true 
+          resource-file-path: .circleci/deployment.yaml 
+          server-side-apply: true
+          action-type: apply
+          envsubst: true
+
+  production-cluster-deploy:
+    description: Production Cluster Deploy
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+    resource_class: medium
+      
+    working_directory: ~/adm-azs-shipping
+    
+    steps:
+      - checkout
+      - run: 
+          name: Setting Build Version
+          command: echo "export BUILD_NUM=$(expr ${CIRCLE_BUILD_NUM} - 1)" >> $BASH_ENV
+
+      - kubernetes/install-kubectl:
+        kubectl-version: latest 
+
+      - kubernetes/install-kubeconfig:
+        kubeconfig: KUBECONFIG_DATA
+      
+      - kubernetes/create-or-update-resource:
+          resource-name: deployment/adm-azs-shipping 
+          show-kubectl-command: true 
+          get-rollout-status: true 
+          resource-file-path: .circleci/deployment.yaml 
+          server-side-apply: true
+          action-type: apply
+          envsubst: true
+
+workflows:
+  version: 2
+  mycryptolist-deployment-workflow:
+    jobs:
+      - build:
+          name: Build & Publish Docker Image
+      - deployment-approval:
+          name: Waiting approval
+          type: approval
+          requires:
+            - Build & Publish Docker Image
+      - staging-cluster-deploy:
+          name: Deploy to Staging Cluster
+          filters:
+            branches:
+              ignore:
+                - master
+                - main
+          requires:
+            - Waiting approval
+      - production-cluster-deploy:
+          name: Deploy to Production Cluster
+          filters:
+            branches:
+              only:
+                - master
+                - main
+          requires:
+            - Waiting approval
