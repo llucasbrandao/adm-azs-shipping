@@ -64,7 +64,7 @@ stringData:
   MARIADB_ROOT_PASSWORD: root
   # O host deve ser o nome do container MariaDB especificado no docker-compose, se estiver usando o Docker
   MARIADB_HOST: mariadb
-  MARIADB_PORT: 3306
+  MARIADB_PORT: "3306"
   
 ---
 apiVersion: v1
