@@ -92,7 +92,7 @@ jobs:
 
 workflows:
   version: 2
-  mycryptolist-deployment-workflow:
+  azs-shipping-deployment-workflow:
     jobs:
       - build:
           name: Build & Publish Docker Image
