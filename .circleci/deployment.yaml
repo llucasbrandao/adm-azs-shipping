@@ -1,0 +1,52 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: azs
+  namespace: default
+  labels:
+    allow.http: "false"
+    application: azs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      application: azs
+  template:
+    metadata:
+      labels:
+        application: azs
+    spec:
+      containers:
+      - name: mycrypto
+        image: llucasbrandao/adm-azs-shipping:$BUILD_NUM
+        ports:
+        - containerPort: 8080
+        securityContext:
+          privileged: true
+        env:
+          - name: MARIADB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: credentials_azs
+                key: MARIADB_PASSWORD
+          - name: MARIADB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: credentials_azs
+                key: MARIADB_DATABASE
+          - name: MARIADB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: credentials_azs
+                key: MARIADB_ROOT_PASSWORD
+          - name: MARIADB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: MARIADB_HOST
+          - name: MARIADB_PORT=3306
+            valueFrom:
+              secretKeyRef:
+                name: credentials_azs
+                key: MARIADB_PORT=3306
