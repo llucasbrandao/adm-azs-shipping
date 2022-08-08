@@ -50,3 +50,54 @@ spec:
               secretKeyRef:
                 name: credentials-azs
                 key: MARIADB_PORT
+                
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: credentials-azs
+type: Opaque
+stringData:
+  MARIADB_USER: root	
+  MARIADB_PASSWORD: root
+  MARIADB_DATABASE: azship_freight
+  MARIADB_ROOT_PASSWORD: root
+  # O host deve ser o nome do container MariaDB especificado no docker-compose, se estiver usando o Docker
+  MARIADB_HOST: mariadb
+  MARIADB_PORT: 3306
+  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azs
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80 # Porta a ser exposta pelo SERVICE
+    targetPort: 8080 # Porta que a aplicação está rodando no POD
+  selector:
+    application: azs
+    
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: azs
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: default
+spec:
+  rules:
+    - host: azs.shafitycore.cyou
+      http:
+        paths:
+          - path : /
+            pathType: Prefix
+            backend:
+              service:
+                name: azs
+                port:
+                  number: 80
