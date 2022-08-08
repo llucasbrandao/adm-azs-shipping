@@ -55,7 +55,7 @@ jobs:
         kubeconfig: KUBECONFIG_DATA
         
       - kubernetes/create-or-update-resource:
-          resource-name: deployment/adm-azs-shipping 
+          resource-name: deployment/azs
           show-kubectl-command: true 
           get-rollout-status: true 
           resource-file-path: .circleci/deployment.yaml 
