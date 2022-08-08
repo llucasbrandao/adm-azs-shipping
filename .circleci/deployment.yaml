@@ -18,7 +18,7 @@ spec:
         application: azs
     spec:
       containers:
-      - name: mycrypto
+      - name: azs
         image: llucasbrandao/adm-azs-shipping:$BUILD_NUM
         ports:
         - containerPort: 8080
