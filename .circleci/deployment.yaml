@@ -28,25 +28,25 @@ spec:
           - name: MARIADB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: credentials_azs
+                name: credentials-azs
                 key: MARIADB_PASSWORD
           - name: MARIADB_DATABASE
             valueFrom:
               secretKeyRef:
-                name: credentials_azs
+                name: credentials-azs
                 key: MARIADB_DATABASE
           - name: MARIADB_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: credentials_azs
+                name: credentials-azs
                 key: MARIADB_ROOT_PASSWORD
           - name: MARIADB_HOST
             valueFrom:
               secretKeyRef:
-                name: credentials
+                name: credentials-azs
                 key: MARIADB_HOST
-          - name: MARIADB_PORT=3306
+          - name: MARIADB_PORT
             valueFrom:
               secretKeyRef:
-                name: credentials_azs
-                key: MARIADB_PORT=3306
+                name: credentials-azs
+                key: MARIADB_PORT
